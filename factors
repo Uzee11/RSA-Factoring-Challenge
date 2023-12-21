@@ -1,0 +1,32 @@
+import sys
+
+def factorize(number):
+    for i in range(2, int(number**0.5) + 1):
+        if number % i == 0:
+            return i, number // i
+    return number, 1
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+
+    try:
+        with open(input_file, 'r') as file:
+            for line in file:
+                number = int(line.strip())
+                factor1, factor2 = factorize(number)
+                print(f"{number}={factor1}*{factor2}")
+
+    except FileNotFoundError:
+        print(f"Error: File '{input_file}' not found.")
+        sys.exit(1)
+
+    except ValueError:
+        print("Error: Invalid input in the file. Please make sure all lines contain valid natural numbers greater than 1.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
